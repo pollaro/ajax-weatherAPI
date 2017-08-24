@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>My own weather app!</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <form class="formInput">
+            <input type="text" name="location">
+            <input type="submit" name="submitBtn" value="Get weather">
+        </form>
+        <span></span>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('.formInput').submit(function(){
+                    var place = $('input[name=location]').val()
+                    place = place.charAt(0).toUpperCase()+place.slice(1)
+                    var url = 'http://api.openweathermap.org/data/2.5/weather?q='+place+'&appid=51c669ae54143c1017cc587dfc7fb806'
+
+                    $.get(url,function(resp){
+                        var temp = resp.main.temp;
+                        var tempC = temp-273.15;
+                        var tempF = tempC*(9/5)+32;
+
+                        $('body span').html('<h1>'+place+'</h1><br><h3>Temperature: '+tempF+'</h3>')
+                    })
+
+                    return false;
+                })
+            })
+        </script>
+    </body>
+</html>
+
+
+<!-- http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=51c669ae54143c1017cc587dfc7fb806 -->
